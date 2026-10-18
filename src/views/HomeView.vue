@@ -1,15 +1,9 @@
 
 <script setup lang="ts">
-const saldo = 5250.00
-const receitas = 6800.00
-const despesas = 1550.00
+import { computed } from 'vue'
+import { usarLancamentos } from '@/stores/lancamentos'
 
-const gastos = [
-  { categoria: 'Moradia', valor: 850, percentual: 55 },
-  { categoria: 'Alimentação', valor: 400, percentual: 26 },
-  { categoria: 'Transporte', valor: 200, percentual: 13 },
-  { categoria: 'Outros', valor: 100, percentual: 6 },
-]
+const { lancamentos } = usarLancamentos()
 
 function formatarMoeda(valor: number) {
   return valor.toLocaleString('pt-BR', {
@@ -17,6 +11,44 @@ function formatarMoeda(valor: number) {
     currency: 'BRL',
   })
 }
+
+const receitas = computed(() => {
+  return lancamentos.value
+    .filter((lancamento) => lancamento.tipo === 'receita')
+    .reduce((total, lancamento) => total + lancamento.valor, 0)
+})
+
+const despesas = computed(() => {
+  return lancamentos.value
+    .filter((lancamento) => lancamento.tipo === 'despesa')
+    .reduce((total, lancamento) => total + lancamento.valor, 0)
+})
+
+const saldo = computed(() => receitas.value - despesas.value)
+
+const gastos = computed(() => {
+  const categorias = lancamentos.value.filter(
+    (lancamento) => lancamento.tipo === 'despesa',
+  )
+
+  const totaisPorCategoria = categorias.reduce(
+    (totais, lancamento) => {
+      totais[lancamento.categoria] =
+        (totais[lancamento.categoria] || 0) + lancamento.valor
+
+      return totais
+    },
+    {} as Record<string, number>,
+  )
+
+  return Object.entries(totaisPorCategoria).map(([categoria, valor]) => ({
+    categoria,
+    valor,
+    percentual: despesas.value > 0
+      ? Math.round((valor / despesas.value) * 100)
+      : 0,
+  }))
+})
 </script>
 
 <template>
@@ -30,7 +62,7 @@ function formatarMoeda(valor: number) {
         </p>
       </div>
 
-      <div class="month-badge">Outubro de 2026</div>
+      <div class="month-badge">Visão geral</div>
     </section>
 
     <section class="summary-cards">
@@ -121,7 +153,7 @@ function formatarMoeda(valor: number) {
     </section>
 
     <p class="demo-note">
-      Dados demonstrativos — os valores ainda não são salvos.
+      Valores calculados com base nos seus lançamentos cadastrados.
     </p>
   </div>
 </template>
