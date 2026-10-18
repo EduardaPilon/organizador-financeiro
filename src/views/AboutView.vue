@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { usarLancamentos } from '@/stores/lancamentos'
+import { exportarExcel } from '@/utils/exportarExcel'
 
 const descricao = ref('')
 const valor = ref('')
@@ -9,7 +10,11 @@ const tipo = ref('despesa')
 const categoria = ref('Alimentação')
 const data = ref(new Date().toISOString().slice(0, 10))
 
+
 const { lancamentos } = usarLancamentos()
+function baixarExcel() {
+  exportarExcel(lancamentos.value)
+}
 
 function cadastrarLancamento() {
   if (!descricao.value.trim() || !valor.value || Number(valor.value) <= 0) {
@@ -105,6 +110,9 @@ function cadastrarLancamento() {
           Cadastrar lançamento
         </button>
       </form>
+      <button type="button" @click="baixarExcel">
+        Exportar para Excel
+      </button>
     </section>
 
     <section class="panel">
