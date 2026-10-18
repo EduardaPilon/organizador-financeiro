@@ -1,15 +1,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
-interface Lancamento {
-  id: number
-  descricao: string
-  valor: number
-  tipo: string
-  categoria: string
-  data: string
-}
+import { usarLancamentos } from '@/stores/lancamentos'
 
 const descricao = ref('')
 const valor = ref('')
@@ -17,7 +9,7 @@ const tipo = ref('despesa')
 const categoria = ref('Alimentação')
 const data = ref(new Date().toISOString().slice(0, 10))
 
-const lancamentos = ref<Lancamento[]>([])
+const { lancamentos } = usarLancamentos()
 
 function cadastrarLancamento() {
   if (!descricao.value.trim() || !valor.value || Number(valor.value) <= 0) {
