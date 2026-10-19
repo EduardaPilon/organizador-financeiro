@@ -1,0 +1,78 @@
+/**
+ * Design tokens do projeto — paleta oficial e tipografia.
+ *
+ * Regra: toda cor da INTERFACE vem daqui (no CSS) ou de `styles/paleta.ts`
+ * (no JavaScript, onde var() não funciona). As cores em
+ * `stores/categorias.ts` são cores de DADOS (paleta de categorias), mas
+ * também são derivadas da mesma paleta — ver `styles/paleta.ts`.
+ *
+ * Paleta oficial confirmada:
+ *   verde #246B4A · coral #C33C54 · azul #254E70 · cinza #E0E1DD
+ *   quinta cor (confirmada pela usuária): #17C3B2 (teal)
+ *
+ * Papéis de cada cor (para não virar enfeite aleatório):
+ *   verde  → ações positivas, receitas, valores a favor
+ *   coral  → despesas, alertas, perigo
+ *   azul   → estrutura e navegação, informações e estados de "atenção"
+ *   cinza  → superfícies, bordas e neutros
+ *   teal   → destaques, investimentos e séries de gráficos
+ *
+ * Observação de contraste (WCAG 2.2 AA): o teal (#17C3B2) e o cinza
+ * (#E0E1DD) NÃO podem ser usados como cor de texto sobre fundo claro
+ * (2,2:1 e 1,3:1). O teal entra só como preenchimento e usa
+ * `--color-accent-dark` quando precisa virar texto.
+ */
+:root {
+  /* ── Paleta oficial ──────────────────────────────────────── */
+  --color-primary: #246b4a; /* verde base (AA: 6,4:1 sobre branco) */
+  --color-primary-dark: #1b5038; /* verde escurecido: hover do primário */
+  --color-primary-soft: #edf3f1; /* verde clareado: fundos suaves verdes */
+  --color-primary-border: #bdd3c9; /* verde clareado: bordas verdes */
+
+  --color-secondary: #254e70; /* azul base (AA: 8,7:1 sobre branco) */
+  --color-secondary-dark: #1c3b54; /* azul escurecido: hover */
+  --color-secondary-soft: #eef1f4; /* azul clareado: fundos de informação */
+  --color-secondary-border: #becad4; /* azul clareado: bordas de informação */
+
+  --color-danger: #c33c54; /* coral base (AA: 5,1:1 sobre branco) */
+  --color-danger-dark: #922d3f; /* coral escurecido: texto de perigo */
+  --color-danger-soft: #faeff1; /* coral clareado: fundos suaves de perigo */
+  --color-danger-border: #edc5cc; /* coral clareado: bordas de perigo */
+
+  --color-accent: #17c3b2; /* teal base: destaque (só preenchimento) */
+  --color-accent-dark: #0e756b; /* teal escurecido: texto sobre fundo claro */
+  --color-accent-soft: #e8f9f7; /* teal clareado: fundos de destaque */
+  --color-accent-border: #a2e7e0; /* teal clareado: bordas de destaque */
+
+  --color-positive: #3a7a5c; /* verde para valores positivos (AA: 5,1:1) */
+
+  /* ── Superfícies, texto e bordas ──────────────────────────── */
+  --color-background: #f3f3f1; /* fundo da aplicação (cinza clareado) */
+  --color-surface: #ffffff; /* cartões e painéis */
+  --color-surface-faint: #f9f9f8; /* áreas de edição, faixas suaves */
+
+  /* Neutros escuros de texto (derivados do cinza, com leve tom da marca). */
+  --color-text: #24332c; /* texto principal (AA: 12,6:1) */
+  --color-muted: #5f6d64; /* texto secundário (AA: 5,4:1 sobre branco) */
+  --color-text-tertiary: #646f67; /* observações muito sutis (AA: 4,7:1) */
+
+  --color-border: #e0e1dd; /* bordas de campos e cartões (cinza oficial) */
+  --color-border-soft: #ededec; /* divisórias internas de listas */
+  --color-focus: #669780; /* anel de foco visível (AA 1.4.11: 3,3:1) */
+  --color-on-primary: #ffffff; /* texto sobre fundos verde/coral/azul */
+  --color-on-primary-soft: #d3e1db; /* texto suave sobre fundo verde (4,8:1) */
+
+  /* ── Tipografia ───────────────────────────────────────────── */
+  /* Fallback local: sem internet, o app usa a fonte do sistema. */
+  --font-sans:
+    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-display: 'Manrope', 'Inter', system-ui, sans-serif;
+}
+
+/* Títulos usam a família de display; o resto herda a principal. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}

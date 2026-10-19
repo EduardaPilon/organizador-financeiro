@@ -10,12 +10,55 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: '/lancamentos',
+      name: 'lancamentos',
+      // route level code-splitting (lazy-load ao visitar a rota)
+      component: () => import('../views/LancamentosView.vue'),
+    },
+    {
+      // Mantém endereços antigos funcionando.
       path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      redirect: '/lancamentos',
+    },
+    {
+      path: '/categorias',
+      name: 'categorias',
+      component: () => import('../views/CategoriasView.vue'),
+    },
+    {
+      path: '/analise',
+      name: 'analise',
+      component: () => import('../views/AnaliseView.vue'),
+    },
+    {
+      path: '/contas',
+      name: 'contas',
+      component: () => import('../views/ContasView.vue'),
+    },
+    {
+      path: '/cartoes',
+      name: 'cartoes',
+      component: () => import('../views/CartoesView.vue'),
+    },
+    {
+      path: '/compromissos',
+      name: 'compromissos',
+      component: () => import('../views/CompromissosView.vue'),
+    },
+    {
+      path: '/investimentos',
+      name: 'investimentos',
+      component: () => import('../views/InvestimentosView.vue'),
+    },
+    {
+      path: '/patrimonio',
+      name: 'patrimonio',
+      component: () => import('../views/PatrimonioView.vue'),
+    },
+    {
+      path: '/orcamentos',
+      name: 'orcamentos',
+      component: () => import('../views/OrcamentosView.vue'),
     },
   ],
 })

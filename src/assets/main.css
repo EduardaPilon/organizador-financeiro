@@ -1,5 +1,8 @@
-
-@import './base.css';
+/* Estilos globais mínimos. Tokens de cor e fonte: styles/tokens.css */
+body {
+  font-size: 15px;
+  line-height: 1.6;
+}
 
 #app {
   width: 100%;
