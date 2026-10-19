@@ -9,7 +9,7 @@ import { adicionarLancamento, usarLancamentos } from '@/stores/lancamentos'
 import { notificar } from '@/stores/notificacoes'
 import { formatarMes, formatarMesCurto, formatarMoeda } from '@/utils/formatar'
 import { exportarCSV } from '@/utils/exportarCSV'
-import { exportarExcel } from '@/utils/exportarExcel'
+import { exportarExcel, exportarTudoExcel } from '@/utils/exportarExcel'
 import {
   converterLinhas,
   detectarMapeamento,
@@ -338,6 +338,12 @@ function exportarAnaliseCSV() {
   notificar('Arquivo CSV gerado com os dados filtrados.')
 }
 
+/** Planilha única com uma aba para cada módulo do app. */
+function exportarTudo() {
+  exportarTudoExcel()
+  notificar('Planilha Excel com todos os dados foi gerada.')
+}
+
 function rotuloVariacao(valor: number | null): string {
   if (valor === null) return '—'
   const sinal = valor > 0 ? '+' : ''
@@ -537,6 +543,29 @@ function rotuloVariacao(valor: number | null): string {
           Mapeie as colunas de data, descrição e valor para continuar.
         </p>
       </template>
+    </section>
+
+    <!-- ── Exportação completa ────────────────────────────── -->
+    <section class="panel">
+      <h3>Exportar todos os dados (.xlsx)</h3>
+      <p class="panel-description">
+        Gera uma planilha única com uma aba para cada módulo: lançamentos,
+        categorias, contas, transferências, cartões, compras, pagamentos de
+        fatura, compromissos, orçamentos, metas, investimentos, bens e dívidas.
+      </p>
+
+      <p class="nota-info">
+        <font-awesome-icon icon="circle-info" aria-hidden="true" />
+        <span>
+          O arquivo é montado apenas neste navegador (SheetJS). Nada é enviado
+          pela internet.
+        </span>
+      </p>
+
+      <button class="botao-acao botao-exportar-tudo" type="button" @click="exportarTudo">
+        <font-awesome-icon icon="file-excel" aria-hidden="true" />
+        Baixar planilha completa
+      </button>
     </section>
 
     <!-- ── Painel de análise ──────────────────────────────── -->
@@ -767,6 +796,10 @@ function rotuloVariacao(valor: number | null): string {
   margin-top: 18px;
   border: 0;
   cursor: pointer;
+}
+
+.botao-exportar-tudo {
+  margin-top: 16px;
 }
 
 .filtros-analise {
